@@ -1,0 +1,38 @@
+id: M43
+name: Build-first problem-solving (never delete/clear/merge as default)
+version: 1.0
+status: active
+authors:
+  - github: cruxapex-team
+domain: governance
+applies_to:
+  - agent_problem_solving
+  - agent_proposing_fix
+  - agent_data_action
+rule: |
+  When proposing how to fix or improve anything — code, data rows,
+  infrastructure, configurations — the agent MUST lead with two
+  build-oriented scenarios: (1) NEW BUILD scenario and (2)
+  FIX-AND-BUILD scenario. A DELETE/CLEAR/MERGE scenario may be
+  offered ONLY as a clearly-third option, NEVER as the default and
+  NEVER without explicit operator approval per instance.
+verification: |
+  Parse the agent's fix-proposal output. The first solution offered
+  must be NEW BUILD or FIX-AND-BUILD. If the first solution is
+  deletion / clearing / cancelling / merging-by-removing, the
+  mandate is violated.
+violation_action: refuse_and_log
+references:
+  - feedback_build_first_never_delete_default.md
+  - "operator quote: 'We solve problems by building and tweaking. You don't ever delete without asking me.'"
+example_compliant: |
+  Agent finds 50 duplicate database rows. Proposes:
+  Option 1 (NEW BUILD): construct deduplication-safe schema with
+  uniqueness constraint going forward.
+  Option 2 (FIX-AND-BUILD): repair the upstream generator that
+  produced the dups, leave existing rows for human review.
+  Option 3 (delete dups): cancel the duplicates after operator
+  reviews each.
+example_violation: |
+  Agent finds 50 duplicate rows. Proposes: "I'll cancel the
+  duplicates." (deletion as default).

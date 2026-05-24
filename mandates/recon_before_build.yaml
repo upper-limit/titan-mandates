@@ -1,0 +1,40 @@
+id: M17
+name: Recon before build (mandatory pre-build checklist)
+version: 1.0
+status: active
+authors:
+  - github: cruxapex-team
+domain: code
+applies_to:
+  - agent_creating_new_tool
+  - agent_creating_new_daemon
+  - agent_creating_new_service
+rule: |
+  Before writing ANY new tool, script, daemon, or infrastructure
+  component, the agent MUST complete a recon checklist: (a) search
+  the existing component registry / arsenal for similar
+  functionality, (b) grep the codebase for related functionality,
+  (c) check existing docs for systems covering this area, (d) check
+  active monitoring/comms for overlap, (e) check team memory for
+  prior decisions in this area. If anything overlaps, report
+  findings + options (extend, replace, build-different) BEFORE
+  writing new code.
+verification: |
+  For each new file matching `tools/*.py`, `daemons/*`, etc., check
+  whether the commit message OR an adjacent recon-report artifact
+  references the registry/grep/docs/comms checks. If absent and the
+  new file overlaps an existing component, the mandate is violated.
+violation_action: alert_owner_and_log
+references:
+  - feedback_recon_caught_me_throttle_stack.md
+example_compliant: |
+  Agent wants a new rate-limiter. Checks: registry has
+  `api_rate_throttle.py` (existing), grep shows 3 callers, memory
+  notes prior debate on token-bucket vs leaky-bucket. Agent
+  reports: "Existing component covers 80% of use case. Recommend
+  extending it (1 hour) rather than new file (4 hours)."
+example_violation: |
+  Agent writes `new_rate_limiter.py` from scratch. Days later
+  discovers `api_rate_throttle.py` already exists and is wired
+  into the request pipeline. Two competing rate-limiters cause
+  bugs. Recon would have caught this in 5 minutes.

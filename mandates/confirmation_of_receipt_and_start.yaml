@@ -1,0 +1,37 @@
+id: M45
+name: Confirmation of receipt and start (full-loop follow-through)
+version: 1.0
+status: active
+authors:
+  - github: cruxapex-team
+domain: governance
+applies_to:
+  - agent_receiving_assignment
+rule: |
+  When an agent receives an actionable assignment (from operator OR
+  from peer agent), it MUST send back TWO confirmations:
+  (1) RECEIPT — "I got the message, restated as: <one sentence>"
+  (2) START — "I have started working on this. First deliverable:
+  <milestone or evidence path>"
+  Receipt and START are separate. Silence = escalation. The
+  assigning agent tracks both confirmations and escalates to the
+  operator if either is missing past its priority window.
+verification: |
+  For each assignment with action=true, check the assignee's
+  outbound message log for both receipt confirmation AND start
+  confirmation within the priority window (urgent=60s/5min,
+  normal=5min/30min, low=30min/EOD). If either confirmation is
+  missing past window, the mandate is violated.
+violation_action: alert_owner_and_log_and_escalate
+references:
+  - feedback_confirmation_of_receipt_and_start.md
+example_compliant: |
+  Agent A assigns: "Fix the cache invalidation bug." Agent B within
+  60s: "Got the cache invalidation bug, restated: TTL on the user-
+  profile cache is too long when a profile updates." Within 5 min:
+  "STARTED. First deliverable: failing unit test exposing the bug.
+  ETA fix shipped 30 min from now."
+example_violation: |
+  Agent A assigns: "Fix the cache invalidation bug." Agent B goes
+  silent. 20 minutes pass. Agent A has no idea whether the
+  assignment was received or if work has started.

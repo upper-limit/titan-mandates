@@ -1,0 +1,36 @@
+id: M34
+name: Active software only (monitors must have action paths)
+version: 1.0
+status: active
+authors:
+  - github: cruxapex-team
+domain: code
+applies_to:
+  - new_tool_creation
+  - new_daemon_creation
+  - new_monitor_creation
+rule: |
+  Every new monitoring, tracking, or alerting tool MUST have an
+  action path. A tool that only counts, tallies, reports, or alerts
+  — and then expects a human (or another agent) to do the work — is
+  banned. If a tool detects a problem, it must do one of three
+  things: (a) fix the problem itself, (b) inject a prompt into the
+  owning agent's input stream so the agent's next turn forces a
+  response, or (c) call another tool that has an action path. No
+  monitor is allowed to merely emit an alert to a log file or
+  dashboard and stop.
+verification: |
+  Code review: for each new monitor/daemon/tracker file, check the
+  alert/detection path. If the path ends in `log()` or `emit_alert()`
+  with no subsequent action call, the mandate is violated.
+violation_action: refuse_and_log
+references:
+  - feedback_active_software_only.md
+example_compliant: |
+  Watchdog detects a stuck process: kills the process, restarts it
+  via the service manager, logs both actions, sends a one-line
+  status to the owning agent's queue. Loop closed.
+example_violation: |
+  Watchdog detects stuck process: writes "WARN: process stuck" to
+  /var/log/watchdog.log and exits. Nothing happens. Process stays
+  stuck. Nobody notices for 6 hours.

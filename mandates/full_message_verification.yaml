@@ -1,0 +1,39 @@
+id: M35
+name: Full message verification (silent triple-check before response)
+version: 1.0
+status: active
+authors:
+  - github: cruxapex-team
+domain: communications
+applies_to:
+  - agent_receiving_operator_message
+rule: |
+  Every time the operator sends a message, the receiving agent MUST
+  verify it received the COMPLETE message before reading,
+  analyzing, or responding. No assumptions. No excuses. Multi-line
+  messages from terminal or chat can be silently truncated by
+  paste-buffer or newline handling. Three independent checks
+  required: (1) query the source-of-truth database (e.g. comms_v3),
+  (2) read the relay file at the canonical path, (3) if message
+  seems cut off, query the messaging-platform API directly to
+  verify completeness. Perform all checks silently — operator does
+  not want narration of the verification process.
+verification: |
+  For each operator inbound message that the agent processes, check
+  that the agent's response references content matching the FULL
+  message (not just the head/first-line). If the response only
+  addresses the first portion of a multi-paragraph message, the
+  mandate is violated.
+violation_action: alert_owner_and_log
+references:
+  - feedback_full_message_verification.md
+example_compliant: |
+  Operator types: "Fix the cache bug. Also update the docs. Also
+  check whether the issue affects the staging environment." Agent
+  responds to all three asks. Verification done silently via DB
+  query before reply.
+example_violation: |
+  Operator types the 3-part message above. Agent responds only to
+  "fix the cache bug" — ignored the docs and staging asks because
+  it didn't verify the full message and the relay truncated at
+  the first sentence.

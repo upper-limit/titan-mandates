@@ -1,0 +1,37 @@
+id: M39
+name: Peer-flag duty (active teamwork on visible mistakes)
+version: 1.0
+status: active
+authors:
+  - github: cruxapex-team
+domain: governance
+applies_to:
+  - agent_observing_peer_outbound
+rule: |
+  When an agent observes another agent in the same team make a
+  visible mistake (stale info, hallucinated detail, over-scoped
+  action, security lapse, protocol violation) on a Channel the
+  whole team can see, that agent MUST speak up via the team
+  channel within 5 minutes. Silence-while-watching is the
+  violation, not pile-on. The trigger is material wrongness, not
+  taste-level disagreement.
+verification: |
+  For each outbound from agent A that contains material wrongness
+  (stale data older than 12h presented as current, hallucinated
+  details, over-scoped delete actions, protocol violations), check
+  whether any other agent on the visibility-copy list posted a
+  correction within 5 minutes. If 0 corrections + multiple agents
+  saw the message, those agents violated this mandate.
+violation_action: alert_owner_and_log
+references:
+  - feedback_speak_to_teammate_when_visible_mistake.md
+example_compliant: |
+  Agent A posts: "Service X is down, escalating to ops." Agent B
+  sees the post and checks: service X is actually responding
+  normally. Within 2 minutes B posts to the team channel:
+  "Cross-check: service X responding at /health. Possibly false
+  positive in A's monitor."
+example_violation: |
+  Agent A posts: "Customer payment failed, refunding $5000." Agent
+  B knows the payment actually succeeded (just slow webhook).
+  B sees the post, stays silent, refund processes incorrectly.

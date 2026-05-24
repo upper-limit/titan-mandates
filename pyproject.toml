@@ -1,0 +1,54 @@
+[build-system]
+requires = ["setuptools>=68", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "titan-mandates"
+version = "0.1.0"
+description = "Operational AI-governance primitives — mandates, council vote, drift scoring, tamper-evident audit chain."
+readme = "README.md"
+license = { text = "FSL-1.1-ALv2" }
+requires-python = ">=3.10"
+authors = [{ name = "CruxApex", email = "brad@cruxapex.com" }]
+keywords = ["ai", "governance", "compliance", "audit", "policy", "agents", "soc2", "hipaa", "eu-ai-act"]
+classifiers = [
+    "Development Status :: 4 - Beta",
+    "Intended Audience :: Developers",
+    "Intended Audience :: Information Technology",
+    "License :: Other/Proprietary License",
+    "Operating System :: OS Independent",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Topic :: Security",
+    "Topic :: Software Development :: Libraries",
+]
+dependencies = [
+    "PyYAML==6.0.2",
+]
+
+[project.optional-dependencies]
+test = ["pytest==8.3.5", "ruff==0.8.6"]
+dev = ["pytest==8.3.5", "ruff==0.8.6", "mypy==1.14.1"]
+
+[project.urls]
+Homepage = "https://cruxapex.com"
+Repository = "https://github.com/upper-limit/titan-mandates"
+Issues = "https://github.com/upper-limit/titan-mandates/issues"
+Documentation = "https://github.com/upper-limit/titan-mandates#readme"
+
+[project.scripts]
+titan-council = "council.cli:main"
+
+[tool.setuptools.packages.find]
+include = ["council*", "drift_scorer*", "audit_chain*"]
+exclude = ["tests*", "examples*", "deliverables*", "system_memory*"]
+
+[tool.ruff]
+line-length = 100
+target-version = "py310"
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "N", "W", "UP"]
+ignore = ["E501"]  # line length handled by line-length

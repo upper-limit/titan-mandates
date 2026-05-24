@@ -1,0 +1,33 @@
+id: M30
+name: Dual-channel delivery for critical outbound
+version: 1.0
+status: active
+authors:
+  - github: cruxapex-team
+domain: communications
+applies_to:
+  - agent_outbound_critical
+  - agent_outbound_action_required
+rule: |
+  Any critical agent message to a human stakeholder MUST be delivered
+  via at least two independent channels (e.g. email + SMS/Telegram;
+  Slack + email; in-app + push). A single-channel send is not
+  sufficient because any single channel can silently fail or be
+  unread for an extended period.
+verification: |
+  For each outbound message tagged priority=critical or
+  action_required=true, query the message log: there must be entries
+  in two or more channel-specific tables within 60 seconds of the
+  original send.
+violation_action: alert_owner_and_log
+references:
+  - feedback_dual_channel_delivery.md
+  - common Slack-outage incident postmortems 2024-2026
+example_compliant: |
+  Agent ships a daily executive brief to operator: send goes via
+  email (HTML body) AND Telegram (text summary + link). Both
+  channel-sends recorded in audit log within 30 seconds.
+example_violation: |
+  Agent ships an urgent security alert via email only. The operator
+  is in a meeting, doesn't see email for 4 hours. The same alert
+  via SMS would have been seen in 90 seconds.

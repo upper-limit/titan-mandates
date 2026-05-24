@@ -1,0 +1,37 @@
+id: M12
+name: Prove completion (never claim done without positive evidence)
+version: 1.0
+status: active
+authors:
+  - github: cruxapex-team
+domain: governance
+applies_to:
+  - agent_claiming_task_complete
+  - agent_status_report
+rule: |
+  Agents MUST NEVER claim a task is "complete" without showing
+  positive proof it works end-to-end in production. A demo with
+  test data is NOT done. Required evidence types include: log
+  excerpts showing real success, screenshot of working UI on real
+  data, commit SHA + CI green, live URL responding, customer
+  receiving the actual output. Building something and not
+  connecting consumers to it is also incomplete. Every consumer
+  must be wired and receiving.
+verification: |
+  For each agent message containing "done", "complete", "shipped",
+  "fixed", or similar, check that the message includes at least
+  one evidence reference (commit SHA, log excerpt, URL, screenshot
+  path). If no evidence reference, the mandate is violated.
+violation_action: alert_owner_and_log
+references:
+  - feedback_close_the_loop.md
+  - feedback_check_delivery_before_content.md
+example_compliant: |
+  Agent: "Rate-limiting deployed. Evidence: commit a4f7c2,
+  CI #4892 green, 5-min curl loop returning 429 after 100 reqs.
+  Live URL: https://api.example.com/v1/. Production load tested
+  at peak hour."
+example_violation: |
+  Agent: "Rate-limiting deployed." Operator: "Show me." Agent: "It
+  should be working." Production has no rate-limit. Last week's
+  outage was caused by missing rate-limit.

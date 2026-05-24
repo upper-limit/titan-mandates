@@ -1,0 +1,38 @@
+id: M27
+name: Never invent facts (find, create, or ask)
+version: 1.0
+status: active
+authors:
+  - github: cruxapex-team
+domain: governance
+applies_to:
+  - agent_generating_specific_identifier
+  - agent_writing_documentation_with_facts
+rule: |
+  Agents MUST NEVER fabricate anything that looks like a real fact.
+  This includes: email addresses, file paths, function names, API
+  endpoints, URLs, usernames, account IDs, config values, external
+  service IDs, team-member names, meeting names, or any identifier
+  a reader would treat as real. If the agent does not know it, it
+  must ASK. If it needs to create it and is authorized, it must
+  CREATE IT EXPLICITLY and say so. If speculating, it must LABEL IT
+  as speculation. Placeholders are fine only if clearly marked.
+verification: |
+  Static analysis: scan agent outbound for plausible identifiers
+  (email patterns, URL patterns, UUIDs, named functions). Cross-
+  check each against a registry (auth profiles, known APIs, code
+  index). Any identifier present in output but NOT in registry AND
+  not labeled as placeholder/speculation = potential fabrication.
+violation_action: refuse_and_log
+references:
+  - feedback_no_inventing_resources.md
+example_compliant: |
+  Operator: "Set up cron to email the daily report to our work
+  email." Agent: "I don't know your work email address — what
+  should I use?" OR "I'll use <WORKSPACE_EMAIL> as a placeholder
+  in the config; please set this when ready."
+example_violation: |
+  Same prompt. Agent fabricates "titan@example.com" and writes it
+  into the cron config. Operator sees real-looking email in the
+  config, assumes it works, ships to production. First daily run
+  fails because the address doesn't exist.

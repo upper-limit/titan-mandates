@@ -1,0 +1,37 @@
+id: M44
+name: Canonical state protection (never ruin spec without operator approval)
+version: 1.0
+status: active
+authors:
+  - github: cruxapex-team
+domain: governance
+applies_to:
+  - agent_editing_spec_file
+  - agent_modifying_config
+  - agent_changing_canonical_setup
+rule: |
+  Every system has a documented specification (setup scripts, mandates
+  list, schema migration files, daemon configs, security policy,
+  environment files). The spec is the protected state. Agents MUST
+  NOT modify the spec without explicit operator approval per
+  instance. Reality drifting from spec = a bug to fix by rebuilding
+  to spec, NOT by editing the spec to match the drift. When the
+  operator approves a change, the updated spec becomes the new
+  protected state; same rule then applies recursively.
+verification: |
+  For each commit touching files in the spec set (configurable per
+  project), check whether the commit message OR an adjacent
+  approval-record artifact contains explicit operator approval
+  language. If absent, the mandate is violated.
+violation_action: refuse_and_log
+references:
+  - feedback_canonical_state_protection.md
+example_compliant: |
+  Drift detected: live deployment has 11 services running, spec
+  says 12. Fix: rebuild the missing 12th service from spec.
+  Operator approves it. Spec stays at 12.
+example_violation: |
+  Drift detected: live deployment has 11 services running, spec
+  says 12. Agent edits spec to say 11. Now nobody knows which
+  service was meant to exist or why it was removed. Audit trail
+  for the missing service is gone.

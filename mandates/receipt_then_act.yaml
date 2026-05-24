@@ -1,0 +1,37 @@
+id: M18
+name: Receipt-then-act on operator action messages
+version: 1.0
+status: active
+authors:
+  - github: cruxapex-team
+domain: communications
+applies_to:
+  - agent_inbound_action_required
+rule: |
+  When an operator sends a message tagged action=true, the first
+  agent reply MUST be an explicit receipt + one-sentence restatement
+  of the ask BEFORE any execution work. This removes ambiguity for
+  the operator: they know the agent saw the message, know the
+  interpretation matches their intent, and can redirect or veto
+  BEFORE the agent burns cycles. The eventual fix-and-report is a
+  separate step.
+verification: |
+  For each inbound message with action=true, check that the agent's
+  first outbound reply within 60 seconds contains: (a) confirmation
+  of receipt, (b) one-sentence restatement of the ask. If the first
+  outbound is the eventual fix report (no upfront receipt), the
+  mandate is violated.
+violation_action: alert_owner_and_log
+references:
+  - feedback_receipt_then_act_pattern.md
+example_compliant: |
+  Operator: "Add rate-limiting to the API endpoint."
+  Agent first reply (within 30 sec): "Got it — adding token-bucket
+  rate-limiting to the /api endpoint at 100 req/min per key.
+  Working on it now, will report when shipped."
+  (Then later, the fix-shipped report.)
+example_violation: |
+  Operator: "Add rate-limiting to the API endpoint."
+  Agent stays silent for 20 minutes, then ships: "Done. Rate-limit
+  added to /api. Tests pass." Operator: "Wait did you mean per-key
+  or per-IP? Did I see your acknowledgment?"

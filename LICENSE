@@ -1,0 +1,102 @@
+Functional Source License, Version 1.1, ALv2 Future License
+
+Abbreviation: FSL-1.1-ALv2
+
+Notice
+
+Copyright 2026 BMSC Inc. (operating as CruxApex)
+
+License
+
+The parties, in consideration of the mutual covenants contained
+in this Agreement, and intending to be legally bound, agree as
+follows:
+
+1. Limited license
+
+Subject to the terms and conditions of this license, the Licensor
+hereby grants to You a non-exclusive, royalty-free, worldwide,
+non-transferable, non-sublicensable, revocable license to use,
+copy, modify, create derivative works, publicly perform, publicly
+display, and redistribute the Software for any Permitted Purpose.
+
+2. Permitted Purpose
+
+A Permitted Purpose is any purpose other than a Competing Use.
+A Competing Use means making the Software available to third
+parties as a hosted or embedded service that competes with
+CruxApex's products or services that provide the same or
+substantially similar functionality as the Software.
+
+Permitted Purposes specifically include but are not limited to:
+- Internal business use
+- Use by professional services firms to deliver consulting
+  services to clients
+- Use to develop products or services that are not competing
+  hosted-governance-platform services
+- Personal use and research
+
+3. Patents
+
+The Licensor grants you a license under any patent claims the
+Licensor can license, or becomes able to license, to make, have
+made, use, sell, offer for sale, import and have imported the
+Software, in each case subject to the limitations and conditions
+in this license. This license does not cover any patent claims
+that you cause to be infringed by modifications or additions to
+the Software. If you raise any claim against the Licensor or
+anyone else that the Software infringes a patent, then your
+patent license to the Software ends immediately.
+
+4. Redistribution
+
+You may redistribute the Software only under this license. You
+must inform recipients that the source code is available under
+this license, and that the Software auto-converts to Apache
+License 2.0 on the Date of Change defined below.
+
+5. Disclaimer
+
+YOU RECEIVE THE SOFTWARE "AS-IS." THE LICENSOR EXPRESSLY DISCLAIMS
+ALL WARRANTIES OF ANY KIND, INCLUDING WITHOUT LIMITATION ANY
+WARRANTY OF NON-INFRINGEMENT, TITLE, FITNESS FOR A PARTICULAR
+PURPOSE, OR MERCHANTABILITY. THE LICENSOR WILL NOT BE LIABLE TO
+YOU FOR ANY DAMAGES ARISING FROM THIS LICENSE OR THE SOFTWARE
+INCLUDING ANY INDIRECT, SPECIAL, INCIDENTAL OR CONSEQUENTIAL
+DAMAGES, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGES.
+
+6. Trademarks
+
+Except for displaying the License Details and identifying the
+Licensor as the origin of the Software, You have no right under
+this license to use the Licensor's trademarks, trade names,
+service marks or product names.
+
+7. Termination
+
+If You violate this license, Your rights under this license
+terminate automatically.
+
+8. Future license
+
+On the second anniversary of the date Licensor publicly releases
+this version of the Software (the "Date of Change"), the License
+will terminate and the Software will be made available under the
+Apache License, Version 2.0.
+
+9. Miscellaneous
+
+This license represents the complete agreement concerning the
+subject matter hereof. If any provision of this license is held
+to be unenforceable, such provision shall be reformed only to
+the extent necessary to make it enforceable.
+
+---
+
+Date of Change: 2028-05-23
+
+Original License Reference: https://fsl.software
+On the Date of Change, this Software is automatically made available
+under the Apache License, Version 2.0 (see https://www.apache.org/licenses/LICENSE-2.0).
+
+Alternative licensing inquiries: brad@cruxapex.com

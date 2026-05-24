@@ -9,7 +9,7 @@
 
 ## What this is
 
-`titan-mandates` is the open-core layer of [CruxApex AI Governance](https://cruxapex.com). It packages five operational primitives that any team running AI agents in production can use today:
+`titan-mandates` is the open-core layer of [CruxApex AI Governance](https://upper-limit.github.io/cruxapex-launch-site/). It packages five operational primitives that any team running AI agents in production can use today:
 
 | Primitive | What it does | Status |
 |---|---|---|
@@ -157,7 +157,7 @@ The package includes a smoke example that writes events, verifies the chain, tam
 - Run anywhere (laptop, your VPC, your container)
 - Forever-free
 
-[CruxApex Commercial](https://cruxapex.com) is the managed product path around this package:
+[CruxApex Commercial](https://upper-limit.github.io/cruxapex-launch-site/) is the managed product path around this package:
 - Hosted deployment and operations support
 - Industry-specific mandate bundles
 - Operations cockpit for agent status, review, usage, and audit evidence

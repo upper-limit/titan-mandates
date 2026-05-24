@@ -33,7 +33,7 @@ test = ["pytest==8.3.5", "ruff==0.8.6"]
 dev = ["pytest==8.3.5", "ruff==0.8.6", "mypy==1.14.1"]
 
 [project.urls]
-Homepage = "https://cruxapex.com"
+Homepage = "https://upper-limit.github.io/cruxapex-launch-site/"
 Repository = "https://github.com/upper-limit/titan-mandates"
 Issues = "https://github.com/upper-limit/titan-mandates/issues"
 Documentation = "https://github.com/upper-limit/titan-mandates#readme"
